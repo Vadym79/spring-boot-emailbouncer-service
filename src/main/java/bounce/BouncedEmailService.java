@@ -13,7 +13,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 public class BouncedEmailService {
 
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
+	private static final Logger log = LoggerFactory.getLogger(BouncedEmailService.class);
 	@Autowired BouncedEmailRepository bouncedEmailRepository;
 	
 	private final static int NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS=1;
@@ -22,6 +22,7 @@ public class BouncedEmailService {
     @HystrixCommand(fallbackMethod = "defaultHandleBouncedEmail")
 	public void handleBouncedEmail(final String email)
 	{
+				
        final BouncedEmail bouncedEmail=  this.bouncedEmailRepository.findOne(email);
        if(bouncedEmail == null)
        {
@@ -40,7 +41,7 @@ public class BouncedEmailService {
 	@HystrixCommand(fallbackMethod = "defaultShouldSendEmail")
 	public boolean shouldSendEmail(final String email)
 	{
-		final BouncedEmail bouncedEmail=  this.bouncedEmailRepository.findOne(email);
+	    final BouncedEmail bouncedEmail=  this.bouncedEmailRepository.findOne(email);
 	    if(bouncedEmail == null)
 	    {
 	    	return true;

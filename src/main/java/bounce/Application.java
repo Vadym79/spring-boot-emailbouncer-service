@@ -1,6 +1,8 @@
 package bounce;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class Application {
 
-	//private static final Logger log = LoggerFactory.getLogger(Application.class);
+	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	@Autowired BouncedEmailService bouncedEmailService;
 	
@@ -43,13 +45,13 @@ public class Application {
 			String email ="v.kazulkin@gmail.com";
 			this.bouncedEmailService.handleBouncedEmail(email);
 			
-			System.out.println("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
 			
-			System.out.println("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail("bla@bla.com"));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail("bla@bla.com"));
 
 			email ="v.kazulkin@iplabs.de";
 			
-			System.out.println("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
 			
 		
 		};
