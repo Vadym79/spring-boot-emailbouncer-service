@@ -16,7 +16,7 @@ public class BouncedEmailService {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	@Autowired BouncedEmailRepository bouncedEmailRepository;
 	
-	private final static int NUMBER_OF_BOUNCED_EMAIL_ALLOWED=1;
+	private final static int NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS=1;
 	
 	@Transactional
     @HystrixCommand(fallbackMethod = "defaultHandleBouncedEmail")
@@ -47,7 +47,7 @@ public class BouncedEmailService {
 	    } 
 	    else
 	    {
-	    	return bouncedEmail.getNumberOfBounces()<= NUMBER_OF_BOUNCED_EMAIL_ALLOWED;
+	    	return bouncedEmail.getNumberOfBounces()<= NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS;
 	    }
 	}
 	

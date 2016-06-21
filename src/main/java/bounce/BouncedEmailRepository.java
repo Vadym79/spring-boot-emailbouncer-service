@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface BouncedEmailRepository extends CrudRepository<BouncedEmail, String> {
 
+	// no need, findOne with primary key as method parameter is already there
     //BouncedEmail findByEmail (final String email);
     
     @Modifying
