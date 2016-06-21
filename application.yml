@@ -1,0 +1,31 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/ips-skinner
+    username: iplabs
+    password: iplabs
+    driverClassName: org.postgresql.Driver
+
+
+hystrix:
+    command:
+        findAllProducts:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 1000
+            circuitBreaker:
+                requestVolumeThreshold: 20
+                errorThresholdPercentage: 50
+            metrics:
+                rollingStats:
+                    timeInMilliseconds: 10000
+                    numBuckets: 10
+    threadpool:
+        ProductService:
+            coreSize: 10
+

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-Title: spring-boot-bounce-management-service
+Implementation-Version: 0.1.0
+Implementation-Vendor-Id: vadym
+Build-Jdk: 1.7.0_45
+Built-By: vadym
+Created-By: Maven Integration for Eclipse
+
