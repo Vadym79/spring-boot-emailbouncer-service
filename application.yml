@@ -13,7 +13,7 @@ spring:
 
 hystrix:
     command:
-        findAllProducts:
+        handleBouncedEmail:
             execution:
                 isolation:
                     thread:
@@ -25,6 +25,19 @@ hystrix:
                 rollingStats:
                     timeInMilliseconds: 10000
                     numBuckets: 10
+        shouldSendEmail:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 1000
+            circuitBreaker:
+                requestVolumeThreshold: 20
+                errorThresholdPercentage: 50
+            metrics:
+                rollingStats:
+                    timeInMilliseconds: 10000
+                    numBuckets: 10
+
     threadpool:
         ProductService:
             coreSize: 10
