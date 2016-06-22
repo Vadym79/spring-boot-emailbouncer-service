@@ -45,13 +45,13 @@ public class Application {
 			String email ="v.kazulkin@gmail.com";
 			this.bouncedEmailService.handleBouncedEmail(email);
 			
-			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.getSendEmailDecision(email).shouldSendEmail());
 			
-			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail("bla@bla.com"));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.getSendEmailDecision("bla@bla.com").shouldSendEmail());
 
 			email ="v.kazulkin@iplabs.de";
 			
-			log.info("should send email "+ email+ " "+ this.bouncedEmailService.shouldSendEmail(email));
+			log.info("should send email "+ email+ " "+ this.bouncedEmailService.getSendEmailDecision(email).shouldSendEmail());
 			
 		
 		};

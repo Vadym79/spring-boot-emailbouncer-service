@@ -15,6 +15,7 @@ public class BouncedEmailService {
 
 	private static final Logger log = LoggerFactory.getLogger(BouncedEmailService.class);
 	@Autowired BouncedEmailRepository bouncedEmailRepository;
+	final static boolean DEFAULT_SHOULD_SEND_EMAIL=false;
 	
 	private final static int NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS=1;
 	
@@ -38,22 +39,28 @@ public class BouncedEmailService {
        log.info("FALLBACK defaultHandleBouncedEmail CALLED ");
     }
 	
-	@HystrixCommand(fallbackMethod = "defaultShouldSendEmail")
-	public boolean shouldSendEmail(final String email)
+	@HystrixCommand(fallbackMethod = "defaultGetSendEmailDecision")
+	public SendEmailDecision getSendEmailDecision(final String email)
 	{
 	    final BouncedEmail bouncedEmail=  this.bouncedEmailRepository.findOne(email);
 	    if(bouncedEmail == null)
 	    {
-	    	return true;
+	    	return new SendEmailDecision(new BouncedEmail(email,0),NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS, true);
 	    } 
 	    else
 	    {
-	    	return bouncedEmail.getNumberOfBounces()<= NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS;
+	    	boolean sendEmail=bouncedEmail.getNumberOfBounces()<= NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS;
+	    	return new SendEmailDecision(bouncedEmail,NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS, sendEmail);
 	    }
 	}
 	
-	public boolean defaultShouldSendEmail(final String email) {
-		 log.info("FALLBACK defaultShouledSendEmail CALLED ");
-	     return true;
+	public SendEmailDecision defaultGetSendEmailDecision(final String email) {
+		 log.info("FALLBACK getSendEmailDecision CALLED ");
+		 
+	     final SendEmailDecision sendEmailDecision =new SendEmailDecision(new BouncedEmail(email,0),NUMBER_OF_PREVIOUSLY_ALLOWED_BOUNCED_EMAILS, DEFAULT_SHOULD_SEND_EMAIL);
+	     sendEmailDecision.withAdditionalMessage("fallback method called with should send email : "+DEFAULT_SHOULD_SEND_EMAIL);
+	     return sendEmailDecision;
+	     
+	     
     }
 }
