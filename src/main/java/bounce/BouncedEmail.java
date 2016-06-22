@@ -27,6 +27,10 @@ public class BouncedEmail {
         	 return new BouncedEmail(email, 1);
         } 
 
+        public static BouncedEmail valueOfNoBouncedEmail(final String email) 
+        {
+        	 return new BouncedEmail(email, 0);
+        } 
 
 		@Override
 		public String toString() {
