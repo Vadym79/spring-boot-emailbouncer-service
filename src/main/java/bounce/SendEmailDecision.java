@@ -27,9 +27,10 @@ public class SendEmailDecision
 		return this.shouldSendEmail;
 	}
 	
-	public void withAdditionalMessage (final String additionalMessage)
+	public SendEmailDecision withAdditionalMessage (final String additionalMessage)
 	{
 		this.additionalMessage=additionalMessage;
+		return this;
 	}
 
 	@Override
